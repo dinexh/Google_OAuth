@@ -1,0 +1,67 @@
+.App{
+  padding: 0;
+ margin: 0;
+ box-sizing: border-box;
+}
+.App{
+  width: 100%;
+  height: 100vh;
+  background-color: #f0f0f0;
+}
+.auth-container{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.auth-container-in{
+  padding: 1rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.auth-container-in-one{
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.Auth_image{
+  mix-blend-mode: multiply;
+  height: 50vh;
+}
+.auth-container-in-two{
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+form{
+  border-radius: 10px;
+  /* border: 2px solid grey; */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+form input{
+  /* width: 100%; */
+  padding: 0.5rem;
+  margin: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+form button{
+  /* width: 100%; */
+  padding: 0.5rem;
+  margin: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f0f0f0;
+  cursor: pointer;
+}

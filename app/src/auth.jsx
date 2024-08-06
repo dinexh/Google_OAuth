@@ -1,45 +1,48 @@
-import React from 'react';
-import './App.css';
-import LoginImage from './login.png';
-import { GoogleLogin } from '@react-oauth/google';
+import React, { useEffect } from 'react';
 
-const Auth = () => {
-  const handleGoogleSuccess = (response) => {
-    console.log('Google login success:', response);
-    // Handle the Google login response, e.g., send it to your server
-  };
+function GoogleLogin() {
+  useEffect(() => {
+    const initializeGapi = () => {
+      window.gapi.load('auth2', () => {
+        window.gapi.auth2.init({
+          client_id: '671243053489-9lg42obh6rp7rjcvfqnlomt05i69aro6.apps.googleusercontent.com',
+        }).then(() => {
+          console.log('Google Auth initialized');
+        }).catch(error => {
+          console.error('Error initializing Google Auth:', error);
+        });
+      });
+    };
 
-  const handleGoogleFailure = (error) => {
-    console.error('Google login error:', error);
+    if (!window.gapi) {
+      const script = document.createElement('script');
+      script.src = 'https://apis.google.com/js/platform.js';
+      script.onload = initializeGapi;
+      script.onerror = (error) => {
+        console.error('Error loading Google API script:', error);
+      };
+      document.body.appendChild(script);
+    } else {
+      initializeGapi();
+    }
+  }, []);
+
+  const handleLogin = () => {
+    const auth2 = window.gapi.auth2.getAuthInstance();
+    auth2.signIn().then(googleUser => {
+      console.log('Logged in user:', googleUser);
+      const id_token = googleUser.getAuthResponse().id_token;
+      // Send id_token to your backend for further processing
+    }).catch(error => {
+      console.error('Error during Google sign-in:', error);
+    });
   };
 
   return (
-    <div className="auth-container">
-      <div className="auth-container-in">
-        <div className="auth-container-in-one">
-          <img 
-            src={LoginImage} 
-            className="Auth_image" 
-            alt="Auth" 
-          />
-        </div>
-        <div className="auth-container-in-two">
-          <h1>Authentication</h1>
-          <form>
-            <input type="text" placeholder="Username" />
-            <input type="password" placeholder="Password" />
-            <button type="submit">Login</button>
-          </form>
-          <div className="google-login">
-            <GoogleLogin
-              onSuccess={handleGoogleSuccess}
-              onError={handleGoogleFailure}
-            />
-          </div>
-        </div>
-      </div>
+    <div>
+      <button onClick={handleLogin}>Login with Google</button>
     </div>
   );
 }
 
-export default Auth;
+export default GoogleLogin;
